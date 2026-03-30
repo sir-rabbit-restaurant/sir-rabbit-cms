@@ -16,6 +16,13 @@ DIRECTUS_SECRET=<your_secret_here>
 docker compose up -d
 ----
 
+== Migration
+Для выполнения миграции выполните следующую команду:
+
+[source,shell]
+----
+docker compose up directus-migrator
+----
 
 == Snapshot
 Для  создания снапшота выполните следующую команду:
