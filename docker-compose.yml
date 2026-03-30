@@ -45,7 +45,14 @@ services:
       - ignore
     image: directus/directus:latest
     command:
-      ["npx", "directus", "schema", "apply", "/directus/snapshot/snapshot.yaml"]
+      [
+        "npx",
+        "directus",
+        "schema",
+        "apply",
+        "--yes",
+        "/directus/snapshot/snapshot.yaml",
+      ]
     depends_on:
       - database
     networks:
