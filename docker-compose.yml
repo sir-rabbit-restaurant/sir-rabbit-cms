@@ -1,0 +1,86 @@
+networks:
+  database-net:
+    driver: bridge
+volumes:
+  database:
+  cms-uploads:
+
+services:
+  database:
+    image: postgres:18
+    restart: always
+    environment:
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+      POSTGRES_DB: directus
+    volumes:
+      - database:/var/lib/postgresql
+    networks:
+      - database-net
+  directus:
+    image: directus/directus:latest
+    depends_on:
+      database:
+        condition: service_started
+      directus-migrator:
+        condition: service_completed_successfully
+    networks:
+      - database-net
+    ports:
+      - "8055:8055"
+    volumes:
+      - cms-uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+    environment:
+      SECRET: "${DIRECTUS_SECRET}"
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "${DATABASE_USER}"
+      DB_PASSWORD: "${DATABASE_PASSWORD}"
+      WEBSOCKETS_ENABLED: "true"
+  directus-migrator:
+    image: directus/directus:latest
+    command:
+      ["npx", "directus", "schema", "apply", "/directus/snapshot/snapshot.yaml"]
+    depends_on:
+      - database
+    networks:
+      - database-net
+    volumes:
+      - ./snapshot:/directus/snapshot
+    environment:
+      SECRET: "${DIRECTUS_SECRET}"
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "${DATABASE_USER}"
+      DB_PASSWORD: "${DATABASE_PASSWORD}"
+  directus-snapshot-creator:
+    image: directus/directus:latest
+    profiles:
+      - ignore
+    command:
+      [
+        "npx",
+        "directus",
+        "schema",
+        "snapshot",
+        "/directus/snapshot/snapshot.yaml",
+      ]
+    depends_on:
+      - database
+    networks:
+      - database-net
+    volumes:
+      - ./snapshot:/directus/snapshot
+    environment:
+      SECRET: "${DIRECTUS_SECRET}"
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "${DATABASE_USER}"
+      DB_PASSWORD: "${DATABASE_PASSWORD}"

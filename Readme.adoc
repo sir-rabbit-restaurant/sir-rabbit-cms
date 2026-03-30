@@ -1,0 +1,26 @@
+= CMS для сайта Сэр Кролик
+
+== Инструкции по запуску
+
+Внесите следующие данные в файл `.env`:
+
+[source,bash]
+----
+DATABASE_USER=<user>
+DATABASE_PASSWORD=<your_password_here>
+DIRECTUS_SECRET=<your_secret_here>
+----
+
+[source,shell]
+----
+docker compose up -d
+----
+
+
+== Snapshot
+Для  создания снапшота выполните следующую команду:
+
+[source,shell]
+----
+docker compose up directus-snapshot-creator
+----
