@@ -22,8 +22,8 @@ services:
     depends_on:
       database:
         condition: service_started
-      directus-migrator:
-        condition: service_completed_successfully
+      # directus-migrator:
+      #   condition: service_completed_successfully
     networks:
       - database-net
     ports:
@@ -41,6 +41,8 @@ services:
       DB_PASSWORD: "${DATABASE_PASSWORD}"
       WEBSOCKETS_ENABLED: "true"
   directus-migrator:
+    profiles:
+      - ignore
     image: directus/directus:latest
     command:
       ["npx", "directus", "schema", "apply", "/directus/snapshot/snapshot.yaml"]
@@ -68,6 +70,7 @@ services:
         "directus",
         "schema",
         "snapshot",
+        "--yes",
         "/directus/snapshot/snapshot.yaml",
       ]
     depends_on:
