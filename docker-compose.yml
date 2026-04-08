@@ -32,6 +32,7 @@ services:
       - cms-uploads:/directus/uploads
       - ./extensions:/directus/extensions
     environment:
+      CORS_ENABLE: true
       SECRET: "${DIRECTUS_SECRET}"
       DB_CLIENT: "pg"
       DB_HOST: "database"
