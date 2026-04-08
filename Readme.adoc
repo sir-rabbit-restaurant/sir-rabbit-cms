@@ -29,5 +29,7 @@ docker compose up directus-migrator
 
 [source,shell]
 ----
+chmod 0777 ./snapshot/* # разрешение на запись в директорию snapshot
 docker compose up directus-snapshot-creator
+docker compose up --force-recreate directus-snapshot-creator # при проблемах с несуществующей сетью
 ----
