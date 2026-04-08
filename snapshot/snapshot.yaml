@@ -1,5 +1,5 @@
 version: 1
-directus: 11.17.0
+directus: 11.17.1
 vendor: postgres
 collections:
   - collection: contact
@@ -39,7 +39,7 @@ collections:
       collapse: open
       collection: dish
       color: '#FFA439'
-      display_template: null
+      display_template: '{{name}} - {{price}}'
       group: null
       hidden: false
       icon: fastfood
@@ -110,6 +110,30 @@ collections:
       versioning: false
     schema:
       name: dish_files
+  - collection: gallery_item
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: gallery_item
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: gallery_thumbnail
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: gallery_item
   - collection: link
     meta:
       accountability: all
@@ -146,7 +170,7 @@ collections:
       archive_value: null
       collapse: open
       collection: site_info
-      color: '#FFFFFF'
+      color: null
       display_template: null
       group: null
       hidden: false
@@ -232,7 +256,9 @@ fields:
       searchable: true
       sort: 2
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Наименование
       validation: null
       validation_message: null
       width: full
@@ -273,7 +299,9 @@ fields:
       searchable: true
       sort: 3
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Значение
       validation: null
       validation_message: null
       width: full
@@ -354,7 +382,9 @@ fields:
       searchable: true
       sort: 2
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Наименование
       validation: null
       validation_message: null
       width: full
@@ -394,7 +424,9 @@ fields:
       searchable: true
       sort: 3
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Описание
       validation: null
       validation_message: null
       width: full
@@ -437,7 +469,9 @@ fields:
       sort: 4
       special:
         - files
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Изображения
       validation: null
       validation_message: null
       width: full
@@ -462,7 +496,9 @@ fields:
       searchable: true
       sort: 5
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Цена
       validation: null
       validation_message: null
       width: full
@@ -503,7 +539,9 @@ fields:
       sort: 6
       special:
         - m2o
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Категория
       validation: null
       validation_message: null
       width: full
@@ -524,6 +562,52 @@ fields:
       has_auto_increment: false
       foreign_key_table: dish_category
       foreign_key_column: id
+  - collection: dish
+    field: weight
+    type: integer
+    meta:
+      collection: dish
+      conditions: null
+      display: null
+      display_options: null
+      field: weight
+      group: null
+      hidden: false
+      interface: input
+      note: В граммах
+      options:
+        iconLeft: numbers
+        min: 0
+        placeholder: Вес (в граммах)
+        step: 10
+      readonly: false
+      required: false
+      searchable: true
+      sort: 8
+      special: null
+      translations:
+        - language: ru-RU
+          translation: Вес
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: weight
+      table: dish
+      data_type: integer
+      default_value: 0
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: dish_category
     field: id
     type: uuid
@@ -584,7 +668,9 @@ fields:
       searchable: true
       sort: 2
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Наименование
       validation: null
       validation_message: null
       width: full
@@ -618,14 +704,21 @@ fields:
       hidden: false
       interface: list-o2m
       note: null
-      options: null
+      options:
+        fields:
+          - name
+          - price
+          - weight
+        layout: table
       readonly: false
       required: false
       searchable: true
       sort: 3
       special:
         - o2m
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Блюда
       validation: null
       validation_message: null
       width: full
@@ -749,6 +842,87 @@ fields:
       has_auto_increment: false
       foreign_key_table: directus_files
       foreign_key_column: id
+  - collection: gallery_item
+    field: id
+    type: integer
+    meta:
+      collection: gallery_item
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: gallery_item
+      data_type: integer
+      default_value: nextval('gallery_item_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: gallery_item
+    field: image
+    type: uuid
+    meta:
+      collection: gallery_item
+      conditions: null
+      display: null
+      display_options: null
+      field: image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: image
+      table: gallery_item
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
   - collection: link
     field: id
     type: integer
@@ -815,11 +989,13 @@ fields:
           - text: Facebook
             value: facebook
       readonly: false
-      required: false
+      required: true
       searchable: true
       sort: 2
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Наименование
       validation: null
       validation_message: null
       width: full
@@ -856,11 +1032,13 @@ fields:
       options:
         placeholder: Ссылка
       readonly: false
-      required: false
+      required: true
       searchable: true
       sort: 3
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Ссылка
       validation: null
       validation_message: null
       width: full
@@ -941,7 +1119,9 @@ fields:
       searchable: true
       sort: 2
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Наименование
       validation: null
       validation_message: null
       width: full
@@ -983,7 +1163,9 @@ fields:
       searchable: true
       sort: 3
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Адрес
       validation: null
       validation_message: null
       width: full
@@ -993,90 +1175,6 @@ fields:
       data_type: character varying
       default_value: null
       max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: site_info
-    field: contacts
-    type: json
-    meta:
-      collection: site_info
-      conditions: null
-      display: null
-      display_options: null
-      field: contacts
-      group: null
-      hidden: false
-      interface: collection-item-multiple-dropdown
-      note: null
-      options:
-        selectedCollection: contact
-      readonly: false
-      required: false
-      searchable: true
-      sort: 4
-      special:
-        - cast-json
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: contacts
-      table: site_info
-      data_type: json
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: site_info
-    field: links
-    type: json
-    meta:
-      collection: site_info
-      conditions: null
-      display: null
-      display_options: null
-      field: links
-      group: null
-      hidden: false
-      interface: collection-item-multiple-dropdown
-      note: null
-      options:
-        selectedCollection: link
-      readonly: false
-      required: false
-      searchable: true
-      sort: 5
-      special:
-        - cast-json
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: links
-      table: site_info
-      data_type: json
-      default_value: null
-      max_length: null
       numeric_precision: null
       numeric_scale: null
       is_nullable: true
@@ -1108,7 +1206,9 @@ fields:
       sort: 6
       special:
         - file
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Логотип
       validation: null
       validation_message: null
       width: full
@@ -1150,7 +1250,9 @@ fields:
       searchable: true
       sort: 7
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Iframe Яндекс.Карт
       validation: null
       validation_message: null
       width: full
@@ -1177,14 +1279,15 @@ fields:
     meta:
       collection: site_info
       conditions: null
-      display: null
-      display_options: null
+      display: formatted-value
+      display_options: {}
       field: schedule
       group: null
       hidden: false
-      interface: input-rich-text-html
+      interface: input
       note: null
       options:
+        placeholder: Расписание
         toolbar:
           - bold
           - italic
@@ -1202,7 +1305,9 @@ fields:
       searchable: true
       sort: 8
       special: null
-      translations: null
+      translations:
+        - language: ru-RU
+          translation: Расписание
       validation: null
       validation_message: null
       width: full
@@ -1212,6 +1317,132 @@ fields:
       data_type: text
       default_value: null
       max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: site_info
+    field: company_name
+    type: string
+    meta:
+      collection: site_info
+      conditions: null
+      display: null
+      display_options: null
+      field: company_name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 9
+      special: null
+      translations:
+        - language: ru-RU
+          translation: Наименование компании
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: company_name
+      table: site_info
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: site_info
+    field: company_inn
+    type: string
+    meta:
+      collection: site_info
+      conditions: null
+      display: null
+      display_options: null
+      field: company_inn
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 10
+      special: null
+      translations:
+        - language: ru-RU
+          translation: ИНН компании
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: company_inn
+      table: site_info
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: site_info
+    field: company_kpp
+    type: string
+    meta:
+      collection: site_info
+      conditions: null
+      display: null
+      display_options: null
+      field: company_kpp
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 11
+      special: null
+      translations:
+        - language: ru-RU
+          translation: КПП компании
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: company_kpp
+      table: site_info
+      data_type: character varying
+      default_value: null
+      max_length: 255
       numeric_precision: null
       numeric_scale: null
       is_nullable: true
@@ -1298,6 +1529,27 @@ relations:
       foreign_key_table: dish
       foreign_key_column: id
       constraint_name: dish_files_dish_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: gallery_item
+    field: image
+    related_collection: directus_files
+    meta:
+      junction_field: null
+      many_collection: gallery_item
+      many_field: image
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: gallery_item
+      column: image
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: gallery_item_image_foreign
       on_update: NO ACTION
       on_delete: SET NULL
   - collection: site_info
