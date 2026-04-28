@@ -6,6 +6,10 @@ sir-rabbit.ru {
 	reverse_proxy localhost:3000
 }
 
+club-cafe.ru {
+	redir https://sir-rabbit.ru
+}
+
 www.sir-rabbit.ru {
 	reverse_proxy localhost:3000
 }
