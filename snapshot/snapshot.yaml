@@ -1,7 +1,59 @@
 version: 1
-directus: 11.17.1
+directus: 11.17.4
 vendor: postgres
 collections:
+  - collection: bar_section
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: bar_section
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: local_bar
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: null
+      sort_field: null
+      translations:
+        - language: ru-RU
+          plural: Секция "Барная карта"
+          singular: Секция "Барная карта"
+          translation: Секция "Барная карта"
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: bar_section
+  - collection: bar_section_dish_category
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: bar_section_dish_category
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: bar_section_dish_category
   - collection: contact
     meta:
       accountability: all
@@ -67,7 +119,7 @@ collections:
       collapse: open
       collection: dish_category
       color: null
-      display_template: null
+      display_template: '{{name}}'
       group: null
       hidden: false
       icon: null
@@ -86,30 +138,6 @@ collections:
       versioning: false
     schema:
       name: dish_category
-  - collection: dish_files
-    meta:
-      accountability: all
-      archive_app_filter: true
-      archive_field: null
-      archive_value: null
-      collapse: open
-      collection: dish_files
-      color: null
-      display_template: null
-      group: null
-      hidden: true
-      icon: import_export
-      item_duplication_fields: null
-      note: null
-      preview_url: null
-      singleton: false
-      sort: null
-      sort_field: null
-      translations: null
-      unarchive_value: null
-      versioning: false
-    schema:
-      name: dish_files
   - collection: gallery_item
     meta:
       accountability: all
@@ -129,7 +157,11 @@ collections:
       singleton: false
       sort: null
       sort_field: null
-      translations: null
+      translations:
+        - language: ru-RU
+          plural: Элементы галереи
+          singular: Элемент галереи
+          translation: Галерея
       unarchive_value: null
       versioning: false
     schema:
@@ -162,6 +194,58 @@ collections:
       versioning: false
     schema:
       name: link
+  - collection: menu_section
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: menu_section
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: menu_book
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: null
+      sort_field: null
+      translations:
+        - language: ru-RU
+          plural: Секция "Меню"
+          singular: Секция "Меню"
+          translation: Секция "Меню"
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: menu_section
+  - collection: menu_section_dish_category
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: menu_section_dish_category
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: menu_section_dish_category
   - collection: site_info
     meta:
       accountability: all
@@ -191,6 +275,192 @@ collections:
     schema:
       name: site_info
 fields:
+  - collection: bar_section
+    field: id
+    type: integer
+    meta:
+      collection: bar_section
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: bar_section
+      data_type: integer
+      default_value: nextval('bar_section_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: bar_section
+    field: categories
+    type: alias
+    meta:
+      collection: bar_section
+      conditions: null
+      display: null
+      display_options: null
+      field: categories
+      group: null
+      hidden: false
+      interface: list-m2m
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - m2m
+      translations:
+        - language: ru-RU
+          translation: Категории
+      validation: null
+      validation_message: null
+      width: full
+  - collection: bar_section_dish_category
+    field: id
+    type: integer
+    meta:
+      collection: bar_section_dish_category
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: bar_section_dish_category
+      data_type: integer
+      default_value: nextval('bar_section_dish_category_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: bar_section_dish_category
+    field: bar_section_id
+    type: integer
+    meta:
+      collection: bar_section_dish_category
+      conditions: null
+      display: null
+      display_options: null
+      field: bar_section_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: bar_section_id
+      table: bar_section_dish_category
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: bar_section
+      foreign_key_column: id
+  - collection: bar_section_dish_category
+    field: dish_category_id
+    type: uuid
+    meta:
+      collection: bar_section_dish_category
+      conditions: null
+      display: null
+      display_options: null
+      field: dish_category_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: dish_category_id
+      table: bar_section_dish_category
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: dish_category
+      foreign_key_column: id
   - collection: contact
     field: id
     type: integer
@@ -448,34 +718,6 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: dish
-    field: images
-    type: alias
-    meta:
-      collection: dish
-      conditions: null
-      display: null
-      display_options: null
-      field: images
-      group: null
-      hidden: false
-      interface: files
-      note: null
-      options:
-        allowedMimeTypes:
-          - image/*
-      readonly: false
-      required: false
-      searchable: true
-      sort: 4
-      special:
-        - files
-      translations:
-        - language: ru-RU
-          translation: Изображения
-      validation: null
-      validation_message: null
-      width: full
-  - collection: dish
     field: price
     type: decimal
     meta:
@@ -608,6 +850,47 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: dish
+    field: image
+    type: uuid
+    meta:
+      collection: dish
+      conditions: null
+      display: null
+      display_options: null
+      field: image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 9
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: image
+      table: dish
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
   - collection: dish_category
     field: id
     type: uuid
@@ -722,126 +1005,6 @@ fields:
       validation: null
       validation_message: null
       width: full
-  - collection: dish_files
-    field: id
-    type: integer
-    meta:
-      collection: dish_files
-      conditions: null
-      display: null
-      display_options: null
-      field: id
-      group: null
-      hidden: true
-      interface: null
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 1
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: id
-      table: dish_files
-      data_type: integer
-      default_value: nextval('dish_files_id_seq'::regclass)
-      max_length: null
-      numeric_precision: 32
-      numeric_scale: 0
-      is_nullable: false
-      is_unique: true
-      is_indexed: false
-      is_primary_key: true
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: true
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: dish_files
-    field: dish_id
-    type: integer
-    meta:
-      collection: dish_files
-      conditions: null
-      display: null
-      display_options: null
-      field: dish_id
-      group: null
-      hidden: true
-      interface: null
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 2
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: dish_id
-      table: dish_files
-      data_type: integer
-      default_value: null
-      max_length: null
-      numeric_precision: 32
-      numeric_scale: 0
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: dish
-      foreign_key_column: id
-  - collection: dish_files
-    field: directus_files_id
-    type: uuid
-    meta:
-      collection: dish_files
-      conditions: null
-      display: null
-      display_options: null
-      field: directus_files_id
-      group: null
-      hidden: true
-      interface: null
-      note: null
-      options: null
-      readonly: false
-      required: false
-      searchable: true
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: directus_files_id
-      table: dish_files
-      data_type: uuid
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: directus_files
-      foreign_key_column: id
   - collection: gallery_item
     field: id
     type: integer
@@ -1059,6 +1222,192 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: menu_section
+    field: id
+    type: integer
+    meta:
+      collection: menu_section
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: menu_section
+      data_type: integer
+      default_value: nextval('menu_section_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: menu_section
+    field: categories
+    type: alias
+    meta:
+      collection: menu_section
+      conditions: null
+      display: null
+      display_options: null
+      field: categories
+      group: null
+      hidden: false
+      interface: list-m2m
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special:
+        - m2m
+      translations:
+        - language: ru-RU
+          translation: Категории
+      validation: null
+      validation_message: null
+      width: full
+  - collection: menu_section_dish_category
+    field: id
+    type: integer
+    meta:
+      collection: menu_section_dish_category
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: menu_section_dish_category
+      data_type: integer
+      default_value: nextval('menu_section_dish_category_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: menu_section_dish_category
+    field: menu_section_id
+    type: integer
+    meta:
+      collection: menu_section_dish_category
+      conditions: null
+      display: null
+      display_options: null
+      field: menu_section_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: menu_section_id
+      table: menu_section_dish_category
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: menu_section
+      foreign_key_column: id
+  - collection: menu_section_dish_category
+    field: dish_category_id
+    type: uuid
+    meta:
+      collection: menu_section_dish_category
+      conditions: null
+      display: null
+      display_options: null
+      field: dish_category_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: dish_category_id
+      table: menu_section_dish_category
+      data_type: uuid
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: dish_category
+      foreign_key_column: id
   - collection: site_info
     field: id
     type: uuid
@@ -1274,61 +1623,6 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: site_info
-    field: schedule
-    type: text
-    meta:
-      collection: site_info
-      conditions: null
-      display: formatted-value
-      display_options: {}
-      field: schedule
-      group: null
-      hidden: false
-      interface: input
-      note: null
-      options:
-        placeholder: Расписание
-        toolbar:
-          - bold
-          - italic
-          - underline
-          - numlist
-          - bullist
-          - removeformat
-          - blockquote
-          - customLink
-          - hr
-          - fullscreen
-          - code
-      readonly: false
-      required: false
-      searchable: true
-      sort: 8
-      special: null
-      translations:
-        - language: ru-RU
-          translation: Расписание
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: schedule
-      table: site_info
-      data_type: text
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: site_info
     field: company_name
     type: string
     meta:
@@ -1454,6 +1748,47 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: site_info
+    field: schedule
+    type: text
+    meta:
+      collection: site_info
+      conditions: null
+      display: null
+      display_options: null
+      field: schedule
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        iconLeft: av_timer
+      readonly: false
+      required: false
+      searchable: true
+      sort: 12
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: schedule
+      table: site_info
+      data_type: text
+      default_value: Пятница - суббота 12:00 - 5:00, воскресение 12:00 -23:00
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
 systemFields:
   - collection: directus_activity
     field: timestamp
@@ -1468,6 +1803,48 @@ systemFields:
     schema:
       is_indexed: true
 relations:
+  - collection: bar_section_dish_category
+    field: dish_category_id
+    related_collection: dish_category
+    meta:
+      junction_field: bar_section_id
+      many_collection: bar_section_dish_category
+      many_field: dish_category_id
+      one_allowed_collections: null
+      one_collection: dish_category
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: bar_section_dish_category
+      column: dish_category_id
+      foreign_key_table: dish_category
+      foreign_key_column: id
+      constraint_name: bar_section_dish_category_dish_category_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: bar_section_dish_category
+    field: bar_section_id
+    related_collection: bar_section
+    meta:
+      junction_field: dish_category_id
+      many_collection: bar_section_dish_category
+      many_field: bar_section_id
+      one_allowed_collections: null
+      one_collection: bar_section
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: categories
+      sort_field: null
+    schema:
+      table: bar_section_dish_category
+      column: bar_section_id
+      foreign_key_table: bar_section
+      foreign_key_column: id
+      constraint_name: bar_section_dish_category_bar_section_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
   - collection: dish
     field: category
     related_collection: dish_category
@@ -1489,13 +1866,13 @@ relations:
       constraint_name: dish_category_foreign
       on_update: NO ACTION
       on_delete: SET NULL
-  - collection: dish_files
-    field: directus_files_id
+  - collection: dish
+    field: image
     related_collection: directus_files
     meta:
-      junction_field: dish_id
-      many_collection: dish_files
-      many_field: directus_files_id
+      junction_field: null
+      many_collection: dish
+      many_field: image
       one_allowed_collections: null
       one_collection: directus_files
       one_collection_field: null
@@ -1503,32 +1880,11 @@ relations:
       one_field: null
       sort_field: null
     schema:
-      table: dish_files
-      column: directus_files_id
+      table: dish
+      column: image
       foreign_key_table: directus_files
       foreign_key_column: id
-      constraint_name: dish_files_directus_files_id_foreign
-      on_update: NO ACTION
-      on_delete: SET NULL
-  - collection: dish_files
-    field: dish_id
-    related_collection: dish
-    meta:
-      junction_field: directus_files_id
-      many_collection: dish_files
-      many_field: dish_id
-      one_allowed_collections: null
-      one_collection: dish
-      one_collection_field: null
-      one_deselect_action: nullify
-      one_field: images
-      sort_field: null
-    schema:
-      table: dish_files
-      column: dish_id
-      foreign_key_table: dish
-      foreign_key_column: id
-      constraint_name: dish_files_dish_id_foreign
+      constraint_name: dish_image_foreign
       on_update: NO ACTION
       on_delete: SET NULL
   - collection: gallery_item
@@ -1550,6 +1906,48 @@ relations:
       foreign_key_table: directus_files
       foreign_key_column: id
       constraint_name: gallery_item_image_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: menu_section_dish_category
+    field: dish_category_id
+    related_collection: dish_category
+    meta:
+      junction_field: menu_section_id
+      many_collection: menu_section_dish_category
+      many_field: dish_category_id
+      one_allowed_collections: null
+      one_collection: dish_category
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: menu_section_dish_category
+      column: dish_category_id
+      foreign_key_table: dish_category
+      foreign_key_column: id
+      constraint_name: menu_section_dish_category_dish_category_id_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: menu_section_dish_category
+    field: menu_section_id
+    related_collection: menu_section
+    meta:
+      junction_field: dish_category_id
+      many_collection: menu_section_dish_category
+      many_field: menu_section_id
+      one_allowed_collections: null
+      one_collection: menu_section
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: categories
+      sort_field: null
+    schema:
+      table: menu_section_dish_category
+      column: menu_section_id
+      foreign_key_table: menu_section
+      foreign_key_column: id
+      constraint_name: menu_section_dish_category_menu_section_id_foreign
       on_update: NO ACTION
       on_delete: SET NULL
   - collection: site_info
