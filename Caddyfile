@@ -28,3 +28,7 @@ www.sir-rabbit.ru {
 club-cafe.ru {
 	redir https://sir-rabbit.ru
 }
+
+monitor.sir-rabbit.ru {
+    reverse_proxy localhost:3000
+}
